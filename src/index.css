@@ -1,0 +1,160 @@
+/* Google Fonts — must come before @tailwind directives */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Base resets ─────────────────────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-bq-base text-bq-text font-sans;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-bq-surface;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-bq-border rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-bq-accent/60;
+  }
+
+  /* Hide scrollbar utility */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Range input styling */
+  input[type='range'] {
+    @apply h-1.5 rounded-full cursor-pointer;
+    background: transparent;
+  }
+  input[type='range']::-webkit-slider-runnable-track {
+    @apply h-1.5 rounded-full bg-bq-border;
+  }
+  input[type='range']::-webkit-slider-thumb {
+    @apply w-4 h-4 rounded-full bg-bq-accent border-2 border-white;
+    -webkit-appearance: none;
+    margin-top: -5px;
+  }
+  input[type='range']::-moz-range-track {
+    @apply h-1.5 rounded-full bg-bq-border;
+  }
+  input[type='range']::-moz-range-thumb {
+    @apply w-4 h-4 rounded-full bg-bq-accent border-2 border-white;
+    border: none;
+  }
+
+  /* Selection */
+  ::selection {
+    @apply bg-bq-accent/30 text-bq-text;
+  }
+}
+
+/* ─── Component layer ─────────────────────────────────────────────────────── */
+@layer components {
+  /* Glass card surface */
+  .glass-card {
+    @apply bg-bq-card/80 backdrop-blur-xl border border-bq-border/50 rounded-2xl;
+  }
+
+  /* Neon text */
+  .text-neon-purple {
+    color: #a855f7;
+    text-shadow: 0 0 10px rgba(168, 85, 247, 0.6);
+  }
+
+  .text-neon-pink {
+    color: #ec4899;
+    text-shadow: 0 0 10px rgba(236, 72, 153, 0.6);
+  }
+
+  /* Shimmer text gradient */
+  .text-shimmer {
+    background: linear-gradient(
+      90deg,
+      #a855f7 0%,
+      #ec4899 25%,
+      #f59e0b 50%,
+      #ec4899 75%,
+      #a855f7 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 3s linear infinite;
+  }
+
+  /* Pulse ring for active nodes */
+  .pulse-ring {
+    @apply absolute inset-0 rounded-full border-2 border-bq-accent/40;
+    animation: pulseRing 1.8s ease-out infinite;
+  }
+}
+
+/* ─── Additional animations ───────────────────────────────────────────────── */
+@layer utilities {
+  @keyframes pulseRing {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(1.5); opacity: 0; }
+  }
+
+  /* Float animations for background tiles */
+  .animate-float-slow {
+    animation: floatSlow 8s ease-in-out infinite;
+  }
+  .animate-float-medium {
+    animation: floatMedium 6s ease-in-out infinite;
+  }
+  .animate-float-fast {
+    animation: floatFast 4s ease-in-out infinite;
+  }
+
+  /* Touch scroll  */
+  .touch-scroll {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* ─── Canvas drawing cursor ────────────────────────────────────────────────── */
+canvas.drawing-active {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='6' fill='none' stroke='%23a855f7' stroke-width='2'/%3E%3Ccircle cx='8' cy='8' r='2' fill='%23a855f7'/%3E%3C/svg%3E") 8 8, crosshair;
+}
+
+/* ─── Transition utilities ─────────────────────────────────────────────────── */
+.view-transition-enter {
+  animation: fadeIn 0.35s ease-out;
+}
+
+.view-transition-exit {
+  animation: fadeOut 0.25s ease-in;
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-10px); }
+}
