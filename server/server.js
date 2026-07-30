@@ -1,13 +1,18 @@
 import express from 'express';
 import cors from 'cors';
 import bcrypt from 'bcryptjs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import db from './db.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 // Helper to wrap db operations in promises
 const runDb = (query, params) => {
@@ -116,6 +121,12 @@ app.post('/api/progress', async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: 'Internal server error' });
   }
+});
+
+// --- STATIC FILES FOR PRODUCTION ---
+app.use(express.static(path.join(__dirname, '../dist')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
 app.listen(PORT, () => {

@@ -5,6 +5,7 @@
   "description": "BrushQuest AI — Gamified AI Micro-Art Academy powered by Gemini Vision",
   "type": "module",
   "scripts": {
+    "start": "node server/server.js",
     "dev": "concurrently \"vite\" \"node server/server.js\"",
     "build": "vite build",
     "preview": "vite preview",
